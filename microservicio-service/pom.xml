@@ -33,6 +33,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <jacoco.version>0.8.4</jacoco.version>
         <lombok.version>1.18.8</lombok.version>
+        <dependency-check-maven.version>6.3.1</dependency-check-maven.version>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.coverage.exclusions>
             **/curso/web/**/*,
@@ -164,6 +165,28 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependency-check-maven.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                            <goal>aggregate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <cveUrlModified>http://192.168.0.10/nvdcve-1.1-modified.json.gz</cveUrlModified>
+                    <cveUrlBase>http://192.168.0.10/nvdcve-1.1-%d.json.gz</cveUrlBase>
+                    <formats>
+                        <format>html</format>
+                        <format>json</format>
+                    </formats>
+                    <outputDirectory>${project.basedir}/target/site/dependency</outputDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>
