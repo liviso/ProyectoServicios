@@ -19,20 +19,5 @@ pipeline {
                 }
             }
         }
-        stage('Container Build') {
-            steps {
-                dir('microservicio-service/'){
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub_id  ', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                        sh 'docker login -u $USERNAME -p $PASSWORD'
-                        sh 'docker build -t microservicio-service .'
-                    }
-                }
-            }
-        }
-        stage('Container Run') {
-            steps {
-                sh 'docker run -d -p 8090:8090 microservicio-service'
-            }
-        }
     }
 }
