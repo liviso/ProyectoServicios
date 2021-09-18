@@ -35,8 +35,8 @@
         <lombok.version>1.18.8</lombok.version>
         <dependency-check-maven.version>6.3.1</dependency-check-maven.version>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.dependencyCheck.htmlReportPath>${project.basedir}/target/site/dependency/dependency-check-report.html</sonar.dependencyCheck.htmlReportPath>
-        <sonar.dependencyCheck.jsonReportPath>${project.basedir}/target/site/dependency/dependency-check-report.json</sonar.dependencyCheck.jsonReportPath>
+        <sonar.dependencyCheck.htmlReportPath>${project.basedir}/microservicio-web/target/site/dependency/dependency-check-report.html</sonar.dependencyCheck.htmlReportPath>
+        <sonar.dependencyCheck.jsonReportPath>${project.basedir}/microservicio-web/target/site/dependency/dependency-check-report.json</sonar.dependencyCheck.jsonReportPath>
         <sonar.dependencyCheck.summarize>true</sonar.dependencyCheck.summarize>
         <sonar.coverage.exclusions>
             **/curso/web/**/*,
