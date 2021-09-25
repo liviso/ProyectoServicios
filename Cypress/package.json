@@ -1,0 +1,20 @@
+{
+  "name": "cypress-base",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cy": "$(npm bin)/cypress open",
+    "cy:*": "$(npm bin)/cypress run",
+    "cy:*:file": "$(npm bin)/cypress run > cypress/fileResult/$(date +'%Y%m%d%I%M%S').txt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://diego.ortega@devtools.axity.com/bitbucket/scm/arq/cypress-base.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^7.1.0"
+  }
+}
