@@ -5,6 +5,7 @@ pipeline {
     }
     tools {
         maven 'M_3_8_2'
+        nodejs 'NodeJs12'
     }
     stages {
         stage('Build and Analize') {
@@ -29,7 +30,18 @@ pipeline {
                 }
             }
         }
-
+        stage('Frontend') {
+            steps {
+                echo 'Building Frontend'
+                dir('frontend/'){
+                    sh 'npm install'
+                    sh 'npm run build'
+                    sh 'docker stop frontend-one || true'
+                    sh "docker build -t frontend-web ."
+                    sh 'docker run -d --rm --name frontend-one -p 8010:80 frontend-web'
+                }
+            }
+        }
         stage('Database') {
             steps {
                 dir('liquibase/'){
