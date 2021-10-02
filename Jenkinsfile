@@ -80,7 +80,7 @@ pipeline {
         stage('Testing') {
             steps {
                 dir('cypress/') {
-                    sh 'docker build -y cypressfront .'
+                    sh 'docker build -t cypressfront .'
                     sh 'docker run cypressfront'
                     //sh 'docker run --rm --name Cypress -v "C:/Users/cm_ol/Documents/CursoMicroservicios/Ecosistema Jenkins/jenkins_home/workspace/ProyectoServicios_Dev/Cypress:/e2e" -w /e2e -e Cypress cypress/included:3.4.0'
                 }
