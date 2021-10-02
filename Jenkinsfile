@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }*/
-        stage('Frontend') {
+       /* stage('Frontend') {
             steps {
                 echo 'Building Frontend'
                 dir('frontend/'){
@@ -41,8 +41,8 @@ pipeline {
                     sh 'docker run -d --rm --name frontend-one -p 8010:80 frontend-web'
                 }
             }
-        }
-        stage('Database') {
+        }*/
+        /*stage('Database') {
             steps {
                 dir('liquibase/'){
                     sh '/opt/liquibase/liquibase --version'
@@ -50,7 +50,7 @@ pipeline {
                     echo 'Applying Db changes'
                }
            }
-        }
+        }*/
         stage('Container Build') {
             steps {
                 dir('microservicio-service/'){
@@ -61,7 +61,7 @@ pipeline {
                 }
             }
         }
-        stage('Container Push Nexus') {
+       /* stage('Container Push Nexus') {
             steps {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockernexus_id  ', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                         sh 'docker login ${LOCAL_SERVER}:8083 -u $USERNAME -p $PASSWORD'
@@ -69,7 +69,7 @@ pipeline {
                         sh 'docker push ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
                     }
             }
-        }
+        }*/
         stage('Container Run') {
             steps {
                 sh 'docker stop microservicio-one || true'
