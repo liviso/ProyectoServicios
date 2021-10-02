@@ -1,0 +1,25 @@
+#Application Name
+spring:
+  application:
+    name: zuul-server     # This is the name for the remote configuration file
+server:
+  port: 8000 #the default port used for zuul service
+
+eureka:
+  client:
+    registerWithEureka: false
+    #puede descargar el directorio telefonico
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+  routes:
+    microservicio-service: # Service to create as sample
+      path: /apimicros/** #path that will be intercepted
+      serviceId: microservicio-service
+      stripPrefix: true  #if zuul should replace the "/sample/" segment

@@ -14,14 +14,14 @@ spring:
     active: dev
 
 server:
-  port: 8090
+  port: 8091
 
 eureka:
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
-      defaultZone: http://${APIMANAGER_SVC_SERVICE_HOST}:${APIMANAGER_SVC_PORT_8000_TCP_PORT}/eureka
+      defaultZone: http://192.168.0.10:8761/eureka
   instance:
     leaseRenewalIntervalInSeconds: 5
     preferIpAddress: true

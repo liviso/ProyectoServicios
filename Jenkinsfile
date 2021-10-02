@@ -82,11 +82,11 @@ pipeline {
                 dir('cypress/') {
                     sh 'docker build -t cypressfront .'
                     sh 'docker run cypressfront'
-                    sh 'docker run --rm --name Cypress -v "/c/Users/cm_ol/Documents/CursoMicroservicios/Ecosistema Jenkins/jenkins_home/workspace/ProyectoServicios_Dev/Cypress:/e2e" -w /e2e -e Cypress cypress/included:3.4.0'
+                    //sh 'docker run --rm --name Cypress -v "/c/Users/cm_ol/Documents/CursoMicroservicios/Ecosistema Jenkins/jenkins_home/workspace/ProyectoServicios_Dev/Cypress:/e2e" -w /e2e -e Cypress cypress/included:3.4.0'
                 }
             }
         }
-        stage('tar videos') 
+       /* stage('tar videos') 
         {
             steps 
             {
@@ -96,7 +96,7 @@ pipeline {
                     allowEmptyArchive: true
                 }
             }
-        }
+        }*/
 
         stage('Estres'){
              steps {
@@ -110,6 +110,31 @@ pipeline {
             }
         }
     }
+
+    stage('Zuul') {
+            steps {
+                dir('ZuulBase/'){
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub_id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                        sh 'docker login -u $USERNAME -p $PASSWORD'
+                        sh 'docker build -t zuul .'
+                        sh 'docker stop zuul-service || true'
+                        sh 'docker run -d --rm --name zuul-service -p 8000:8000 zuul'
+                    }
+                }
+            }
+        }
+        stage('Eureka') {
+            steps {
+                dir('EurekaBase/'){
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub_id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                        sh 'docker login -u $USERNAME -p $PASSWORD'
+                        sh 'docker build -t eureka .'
+                        sh 'docker stop eureka-service || true'
+                        sh 'docker run -d --rm --name eureka-service -p 8761:8761 eureka'
+                    }
+                }
+            }
+        }
 
   /*  post {
         always {
