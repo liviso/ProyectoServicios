@@ -114,6 +114,7 @@ pipeline {
     stage('Zuul') {
             steps {
                 dir('ZuulBase/'){
+                    sh 'mvn clean package'
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub_id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                         sh 'docker login -u $USERNAME -p $PASSWORD'
                         sh 'docker build -t zuul .'
@@ -126,6 +127,7 @@ pipeline {
         stage('Eureka') {
             steps {
                 dir('EurekaBase/'){
+                    sh 'mvn clean package'
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub_id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                         sh 'docker login -u $USERNAME -p $PASSWORD'
                         sh 'docker build -t eureka .'
