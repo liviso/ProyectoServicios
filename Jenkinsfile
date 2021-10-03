@@ -13,12 +13,11 @@ pipeline {
                 dir('microservicio-service/'){
                     echo 'Execute Maven and Analizing with SonarServer'
                     withSonarQubeEnv('SonarServer') {
-                        sh "mvn clean package dependency-check:check sonar:sonar \
+                       /* sh "mvn clean package dependency-check:check sonar:sonar \
                             -Dsonar.projectKey=21_MyCompany_Microservice \
                             -Dsonar.projectName=21_MyCompany_Microservice \
                             -Dsonar.sources=src/main \
-                            -Dsonar.coverage.exclusions=**/*TO.java,**/*DO.java,**/curso/web/**/*,**/curso/persistence/**/*,**/curso/commons/**/*,**/curso/model/**/* \
-                            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml"
+                            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml"*/
                     }
                 }
             }
@@ -82,7 +81,7 @@ pipeline {
                 dir('cypress/') {
                     sh 'docker build -t cypressfront .'
                     sh 'docker run cypressfront'
-                    sh 'docker run --rm --name Cypress -v "/C/Users/cm_ol/Documents/CursoMicroservicios/EcosistemaJenkins/jenkins_home/workspace/ProyectoServicios_Dev/Cypress:/e2e" -w /e2e -e Cypress cypress/included:3.4.0'
+                    sh 'docker run --rm --name Cypress -v "/Users/cm_ol/Documents/CursoMicroservicios/EcosistemaJenkins/jenkins_home/workspace/ProyectoServicios_Dev/Cypress:/e2e" -w /e2e -e Cypress cypress/included:3.4.0'
                 }
             }
         }
