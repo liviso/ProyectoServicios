@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        LOCAL_SERVER = '192.168.0.10'
+        LOCAL_SERVER = '192.168.0.11'
     }
     tools {
         maven 'M_3_8_2'
@@ -13,11 +13,12 @@ pipeline {
                 dir('microservicio-service/'){
                     echo 'Execute Maven and Analizing with SonarServer'
                     withSonarQubeEnv('SonarServer') {
-                       /* sh "mvn clean package dependency-check:check sonar:sonar \
+                        sh "mvn clean package dependency-check:check sonar:sonar \
                             -Dsonar.projectKey=21_MyCompany_Microservice \
                             -Dsonar.projectName=21_MyCompany_Microservice \
                             -Dsonar.sources=src/main \
-                            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml"*/
+                            -Dsonar.coverage.exclusions=**/*TO.java,**/*DO.java,**/curso/web/**/*,**/curso/persistence/**/*,**/curso/commons/**/*,**/curso/model/**/* \
+                            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml"
                     }
                 }
             }
