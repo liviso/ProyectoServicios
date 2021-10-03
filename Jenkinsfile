@@ -61,7 +61,7 @@ pipeline {
                 }
             }
         }
-       /* stage('Container Push Nexus') {
+        stage('Container Push Nexus') {
             steps {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockernexus_id  ', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                         sh 'docker login ${LOCAL_SERVER}:8083 -u $USERNAME -p $PASSWORD'
@@ -69,7 +69,7 @@ pipeline {
                         sh 'docker push ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
                     }
             }
-        }*/
+        }
         stage('Container Run') {
             steps {
                 sh 'docker stop microservicio-one || true'
