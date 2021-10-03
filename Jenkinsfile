@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }*/
-       /* stage('Frontend') {
+        stage('Frontend') {
             steps {
                 echo 'Building Frontend'
                 dir('frontend/'){
@@ -41,7 +41,7 @@ pipeline {
                     sh 'docker run -d --rm --name frontend-one -p 8010:80 frontend-web'
                 }
             }
-        }*/
+        }
         /*stage('Database') {
             steps {
                 dir('liquibase/'){
