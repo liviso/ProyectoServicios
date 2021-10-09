@@ -9,7 +9,12 @@ pipeline {
     }
     stages {
         stage('Build and Analize') {
-           
+            when {
+                anyOf {
+                    changeset "*microservicio-service/**"
+                    expression { currentBuild.previousBuild.result != "SUCCESS" }
+                }
+            }
             steps {
                 dir('microservicio-service/'){
                     echo 'Execute Maven and Analizing with SonarServer'
@@ -25,7 +30,12 @@ pipeline {
             }
         }
         stage('Build and Analize two') {
-            
+            when {
+                anyOf {
+                    changeset "*microservicio-service-two/**"
+                    expression { currentBuild.previousBuild.result != "SUCCESS" }
+                }
+            }
             steps {
                 dir('microservicio-service-two/'){
                     echo 'Execute Maven and Analizing with SonarServer'
@@ -60,7 +70,12 @@ pipeline {
             }
         }*/
         stage('Database') {
-            
+            when {
+                anyOf {
+                    changeset "*liquibase/**"
+                    expression { currentBuild.previousBuild.result != "SUCCESS" }
+                }
+            }
             steps {
                 dir('liquibase/'){
                     sh '/opt/liquibase/liquibase --version'
@@ -165,7 +180,12 @@ pipeline {
     }*/
 
     stage('Zuul') {
-        
+         when {
+                anyOf {
+                    changeset "*ZuulBase/**"
+                    expression { currentBuild.previousBuild.result != "SUCCESS" }
+                }
+            }
             steps {
                 dir('ZuulBase/'){
                     sh 'mvn clean package'
@@ -179,7 +199,12 @@ pipeline {
             }
         }
         stage('Eureka') {
-           
+            when {
+                anyOf {
+                    changeset "*EurekaBase/**"
+                    expression { currentBuild.previousBuild.result != "SUCCESS" }
+                }
+            }
             steps {
                 dir('EurekaBase/'){
                     sh 'mvn clean package'
