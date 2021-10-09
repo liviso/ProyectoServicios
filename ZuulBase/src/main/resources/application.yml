@@ -12,7 +12,7 @@ eureka:
     #puede descargar el directorio telefonico, consulto a eureka
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://192.168.0.10:8761/eureka
 
 zuul:
   ignoredServices: '*'
