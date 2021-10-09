@@ -41,8 +41,8 @@ pipeline {
                     echo 'Execute Maven and Analizing with SonarServer'
                     withSonarQubeEnv('SonarServer') {
                         sh "mvn clean package dependency-check:check sonar:sonar \
-                            -Dsonar.projectKey=21_MyCompany_Microservice \
-                            -Dsonar.projectName=21_MyCompany_Microservice \
+                            -Dsonar.projectKey=21_MyCompany_Microservice_Two \
+                            -Dsonar.projectName=21_MyCompany_Microservice_Two \
                             -Dsonar.sources=src/main \
                             -Dsonar.coverage.exclusions=**/*TO.java,**/*DO.java,**/curso/web/**/*,**/curso/persistence/**/*,**/curso/commons/**/*,**/curso/model/**/* \
                             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml"
@@ -142,9 +142,11 @@ pipeline {
                 //Para poner que ambiente, desarrollo, pruebas, prod SPRING_PROFILE_ACTIVE para lo de DB del microservicio
                 //sh 'docker run -d --rm --name microservicio-one -e SPRING_PROFILES_ACTIVE=qa -p 8090:8090 ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'              
                // sh 'docker run -d --rm --name microservicio-one -e SPRING_PROFILES_ACTIVE=qa microservicio-service'
+                sh 'docker stop microservicio-serv-two || true'
+                sh 'docker run -d --rm --name microservicio-serv-two -e SPRING_PROFILES_ACTIVE=qa microservicio-service-two'
 
-                sh 'docker stop microservicio-service-two || true'
-                sh 'docker run -d --rm --name microservicio-service-two -e SPRING_PROFILES_ACTIVE=qa microservicio-service-two'
+                sh 'docker stop microservicio-serv-two-two || true'
+                sh 'docker run -d --rm --name microservicio-serv-two-two -e SPRING_PROFILES_ACTIVE=qa microservicio-service-two'
 
             }
         }
