@@ -112,7 +112,7 @@ pipeline {
                 sh 'docker run -d --rm --name microservicio-two -e SPRING_PROFILES_ACTIVE=qa ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
            
                 sh 'docker stop microservicio-two || true'
-                sh 'docker run -d --rm --name microservicio-two -e SPRING_PROFILES_ACTIVE=qa ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
+                sh 'docker run -d --rm --name microservicio-two -e SPRING_PROFILES_ACTIVE=qa microservicio-service'
 
             }
         }
