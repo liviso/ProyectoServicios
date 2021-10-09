@@ -9,6 +9,12 @@ pipeline {
     }
     stages {
         stage('Build and Analize') {
+            when {
+                anyOf {
+                    changeset "*microservicio-service/**"
+                    expression { currentBuild.previousBuild != "SUCCESS" }
+                }
+            }
             steps {
                 dir('microservicio-service/'){
                     echo 'Execute Maven and Analizing with SonarServer'
@@ -30,7 +36,7 @@ pipeline {
                 }
             }
         }*/
-        stage('Frontend') {
+       /* stage('Frontend') {
             steps {
                 echo 'Building Frontend'
                 dir('frontend/'){
@@ -41,8 +47,14 @@ pipeline {
                     sh 'docker run -d --rm --name frontend-one -p 8010:80 frontend-web'
                 }
             }
-        }
-        /*stage('Database') {
+        }*/
+        stage('Database') {
+            when {
+                anyOf {
+                    changeset "*liquibase/**"
+                    expression { currentBuild.previousBuild != "SUCCESS" }
+                }
+            }
             steps {
                 dir('liquibase/'){
                     sh '/opt/liquibase/liquibase --version'
@@ -50,7 +62,7 @@ pipeline {
                     echo 'Applying Db changes'
                }
            }
-        }*/
+        }
         stage('Container Build') {
             steps {
                 dir('microservicio-service/'){
@@ -71,6 +83,12 @@ pipeline {
             }
         }*/
         stage('Container Run') {
+           /* when {
+                anyOf {
+                    changeset "*microservicio-service/**"
+                    expression { currentBuild.previousBuild != "SUCCESS" }
+                }
+            }*/
             steps {
                 sh 'docker stop microservicio-one1 || true'
                 sh 'docker run -d --rm --name microservicio-one1 -e SPRING_PROFILES_ACTIVE=qa -p 8090:8090 ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
@@ -116,6 +134,12 @@ pipeline {
     }*/
 
     stage('Zuul') {
+         when {
+                anyOf {
+                    changeset "*ZuulBase/**"
+                    expression { currentBuild.previousBuild != "SUCCESS" }
+                }
+            }
             steps {
                 dir('ZuulBase/'){
                     sh 'mvn clean package'
@@ -129,6 +153,12 @@ pipeline {
             }
         }
         stage('Eureka') {
+            when {
+                anyOf {
+                    changeset "*EurekaBase/**"
+                    expression { currentBuild.previousBuild != "SUCCESS" }
+                }
+            }
             steps {
                 dir('EurekaBase/'){
                     sh 'mvn clean package'
