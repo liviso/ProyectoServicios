@@ -126,27 +126,21 @@ pipeline {
                 }
             }*/
             steps {
-                sh 'docker stop microservicio-one1 || true'
-                sh 'docker run -d --rm --name microservicio-one1 -e SPRING_PROFILES_ACTIVE=qa ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
+                sh 'docker stop microservicio-one-1 || true'
+                sh 'docker run -d --rm --name microservicio-one-1 -e SPRING_PROFILES_ACTIVE=qa ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
 
-                sh 'docker stop microservicio-two || true'
-                sh 'docker run -d --rm --name microservicio-two -e SPRING_PROFILES_ACTIVE=qa ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
+                sh 'docker stop microservicio-one-2 || true'
+                sh 'docker run -d --rm --name microservicio-one-2 -e SPRING_PROFILES_ACTIVE=qa ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
             }
         }
 
          stage('Container Run two') {
             steps {
-                //Esto solo es borrar la imagen para ver que se bajse del repo nexus
-                //sh 'docker rmi ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
-                //sh 'docker stop microservicio-one || true'
-                //Para poner que ambiente, desarrollo, pruebas, prod SPRING_PROFILE_ACTIVE para lo de DB del microservicio
-                //sh 'docker run -d --rm --name microservicio-one -e SPRING_PROFILES_ACTIVE=qa -p 8090:8090 ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'              
-               // sh 'docker run -d --rm --name microservicio-one -e SPRING_PROFILES_ACTIVE=qa microservicio-service'
-                sh 'docker stop microservicio-serv-two || true'
-                sh 'docker run -d --rm --name microservicio-serv-two -e SPRING_PROFILES_ACTIVE=qa microservicio-service-two'
+                sh 'docker stop microservicio-two-1 || true'
+                sh 'docker run -d --rm --name microservicio-two-1 -e SPRING_PROFILES_ACTIVE=qa microservicio-service-two'
 
-                sh 'docker stop microservicio-serv-two-two || true'
-                sh 'docker run -d --rm --name microservicio-serv-two-two -e SPRING_PROFILES_ACTIVE=qa microservicio-service-two'
+                sh 'docker stop microservicio-two-2 || true'
+                sh 'docker run -d --rm --name microservicio-two-2 -e SPRING_PROFILES_ACTIVE=qa microservicio-service-two'
 
             }
         }
