@@ -29,6 +29,27 @@ pipeline {
                 }
             }
         }
+        stage('Build and Analize two') {
+            when {
+                anyOf {
+                    changeset "*microservicio-service-two/**"
+                    expression { currentBuild.previousBuild.result != "SUCCESS" }
+                }
+            }
+            steps {
+                dir('microservicio-service-two/'){
+                    echo 'Execute Maven and Analizing with SonarServer'
+                    withSonarQubeEnv('SonarServer') {
+                        sh "mvn clean package dependency-check:check sonar:sonar \
+                            -Dsonar.projectKey=21_MyCompany_Microservice \
+                            -Dsonar.projectName=21_MyCompany_Microservice \
+                            -Dsonar.sources=src/main \
+                            -Dsonar.coverage.exclusions=**/*TO.java,**/*DO.java,**/curso/web/**/*,**/curso/persistence/**/*,**/curso/commons/**/*,**/curso/model/**/* \
+                            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml"
+                    }
+                }
+            }
+        }
        /* stage('Quality Gate'){
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
