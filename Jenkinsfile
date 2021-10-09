@@ -12,7 +12,7 @@ pipeline {
             when {
                 anyOf {
                     changeset "*microservicio-service/**"
-                    expression { currentBuild.previousBuild != "SUCCESS" }
+                    expression { currentBuild.previousBuild.result != "SUCCESS" }
                 }
             }
             steps {
@@ -52,7 +52,7 @@ pipeline {
             when {
                 anyOf {
                     changeset "*liquibase/**"
-                    expression { currentBuild.previousBuild != "SUCCESS" }
+                    expression { currentBuild.previousBuild.result != "SUCCESS" }
                 }
             }
             steps {
@@ -74,6 +74,11 @@ pipeline {
             }
         }
        /* stage('Container Push Nexus') {
+           when {
+                anyOf {
+                    changeset "*microservicio-service/**"
+                    expression { currentBuild.previousBuild.result != "SUCCESS" }
+                }
             steps {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockernexus_id  ', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                         sh 'docker login ${LOCAL_SERVER}:8083 -u $USERNAME -p $PASSWORD'
@@ -86,7 +91,7 @@ pipeline {
            /* when {
                 anyOf {
                     changeset "*microservicio-service/**"
-                    expression { currentBuild.previousBuild != "SUCCESS" }
+                    expression { currentBuild.previousBuild.result != "SUCCESS" }
                 }
             }*/
             steps {
@@ -137,7 +142,7 @@ pipeline {
          when {
                 anyOf {
                     changeset "*ZuulBase/**"
-                    expression { currentBuild.previousBuild != "SUCCESS" }
+                    expression { currentBuild.previousBuild.result != "SUCCESS" }
                 }
             }
             steps {
@@ -156,7 +161,7 @@ pipeline {
             when {
                 anyOf {
                     changeset "*EurekaBase/**"
-                    expression { currentBuild.previousBuild != "SUCCESS" }
+                    expression { currentBuild.previousBuild.result != "SUCCESS" }
                 }
             }
             steps {
