@@ -61,7 +61,7 @@ pipeline {
                 }
             }
         }
-        stage('Container Push Nexus') {
+       /* stage('Container Push Nexus') {
             steps {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockernexus_id  ', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                         sh 'docker login ${LOCAL_SERVER}:8083 -u $USERNAME -p $PASSWORD'
@@ -69,15 +69,19 @@ pipeline {
                         sh 'docker push ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
                     }
             }
-        }
+        }*/
         stage('Container Run') {
             steps {
                 sh 'docker stop microservicio-one1 || true'
                 sh 'docker run -d --rm --name microservicio-one1 -e SPRING_PROFILES_ACTIVE=qa -p 8090:8090 ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
+
+                sh 'docker stop microservicio-two || true'
+                sh 'docker run -d --rm --name microservicio-two -e SPRING_PROFILES_ACTIVE=qa -p 8091:8090 ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
+           
             }
         }
 
-        stage('Testing') {
+        /*stage('Testing') {
             steps {
                 dir('cypress/') {
                     sh 'docker build -t cypressfront .'
