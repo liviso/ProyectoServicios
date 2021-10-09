@@ -24,10 +24,10 @@ zuul:
       path: /apimicros/** #path that will be intercepted
       serviceId: microservicio-service
       stripPrefix: true  #if zuul should replace the "/sample/" segment
-      microservicio-service-two: # Service to create as sample
-        path: /apimicrostwo/** #path that will be intercepted
-        serviceId: microservicio-service-two
-        stripPrefix: true  #if zuul should replace the "/sample/" segment
+    microservicio-service-two: # Service to create as sample
+      path: /apimicrostwo/** #path that will be intercepted
+      serviceId: microservicio-service-two
+      stripPrefix: true  #if zuul should replace the "/sample/" segment
 
 ribbon:
   ReadTimeout: 60000
