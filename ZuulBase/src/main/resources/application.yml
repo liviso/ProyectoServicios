@@ -28,3 +28,7 @@ zuul:
         path: /apimicrostwo/** #path that will be intercepted
         serviceId: microservicio-service-two
         stripPrefix: true  #if zuul should replace the "/sample/" segment
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectionTimeout: 3000
