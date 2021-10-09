@@ -73,6 +73,16 @@ pipeline {
                 }
             }
         }
+           stage('Container Build two') {
+            steps {
+                dir('microservicio-service-two/'){
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub_id  ', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                        sh 'docker login -u $USERNAME -p $PASSWORD'
+                        sh 'docker build -t microservicio-service .'
+                    }
+                }
+            }
+        }
        /* stage('Container Push Nexus') {
            when {
                 anyOf {
@@ -101,6 +111,9 @@ pipeline {
                 sh 'docker stop microservicio-two || true'
                 sh 'docker run -d --rm --name microservicio-two -e SPRING_PROFILES_ACTIVE=qa ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
            
+                sh 'docker stop microservicio-two || true'
+                sh 'docker run -d --rm --name microservicio-two -e SPRING_PROFILES_ACTIVE=qa ${LOCAL_SERVER}:8083/repository/docker-private/microservicio_nexus:dev'
+
             }
         }
 

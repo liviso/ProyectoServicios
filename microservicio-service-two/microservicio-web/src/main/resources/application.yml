@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    initialization-mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    show-sql: true
+  application:
+    name: microservicio-service-two
+  profiles:
+    active: dev
+
+server:
+  port: 8100
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://192.168.0.10:8761/eureka
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    preferIpAddress: true
