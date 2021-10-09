@@ -16,7 +16,9 @@ server:
 
 eureka:
   client:
+    # registrate con eureka
     register-with-eureka: true
+    # yo tambien quiero resolver cosas de eureka
     fetch-registry: true
     service-url:
       defaultZone: http://192.168.0.10:8761/eureka

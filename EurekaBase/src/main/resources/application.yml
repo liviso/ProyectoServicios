@@ -9,6 +9,7 @@ server:
 eureka:
   client:
     #telling the server not to register himself in the service registry
+    # no necesita conectarse con si mismo
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
